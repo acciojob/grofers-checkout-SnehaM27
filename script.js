@@ -3,7 +3,6 @@ getSumBtn.append("Get Total Price");
 document.body.appendChild(getSumBtn);
 
 const getSum = () => {
-    // Select all price cells
     const prices = document.querySelectorAll(".price");
     let total = 0;
 
@@ -11,19 +10,21 @@ const getSum = () => {
         total += Number(cell.textContent);
     });
 
-    // Create a new row
     const table = document.querySelector("table");
+
+    // Remove old total (if exists)
+    const oldAns = document.getElementById("ans");
+    if (oldAns) oldAns.parentElement.remove();
+
+    // Create total row
     const totalRow = document.createElement("tr");
-    
-    // Create a single cell that spans both columns
     const totalCell = document.createElement("td");
-    totalCell.colSpan = 2;
-    totalCell.textContent = `Total Price: Rs ${total}`;
 
-    // Add cell to row
+    totalCell.id = "ans";     // REQUIRED for Cypress tests
+    totalCell.colSpan = 2;    // Single cell covering both columns
+    totalCell.textContent = total; // ONLY the number
+
     totalRow.appendChild(totalCell);
-
-    // Append row to table
     table.appendChild(totalRow);
 };
 
